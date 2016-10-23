@@ -6,12 +6,50 @@ macro_rules! gen_converter {
     }
 }
 
-macro_rules! gen_op_impl {
-    (for $this:ident, $rhs:ident as $out_type:ty :
-     $op_name:ident<$op_type:ty> = $result:expr) => {
-        impl $op_type for $out_type {
-            type Output = $out_type;
-            fn $op_name($this, $rhs: Self) -> Self { $result }
+// /// Generate an operation.
+// macro_rules! gen_op {
+//     (for $this:ident, $rhs:ident as $out_type:ty :
+//      $op_name:ident<$op_type:ty> = $result:expr) => {
+//         impl $op_type for $out_type {
+//             type Output = $out_type;
+//             fn $op_name($this, $rhs: Self) -> Self { $result }
+//         }
+//     }
+// }
+
+
+macro_rules! gen_add {
+    (for $this:ident, $rhs:ident as $OUT:ty = $formula:expr) => {
+        impl Add for $OUT {
+            type Output = $OUT;
+            fn add($this, $rhs: Self) -> Self { $formula }
+        }
+    }
+}
+
+macro_rules! gen_sub {
+    (for $this:ident, $rhs:ident as $OUT:ty = $formula:expr) => {
+        impl Sub for $OUT {
+            type Output = $OUT;
+            fn sub($this, $rhs: Self) -> Self { $formula }
+        }
+    }
+}
+
+macro_rules! gen_mul {
+    (for $this:ident, $rhs:ident: $RHS:ty as $OUT:ty = $formula:expr) => {
+        impl Mul<$RHS> for $OUT {
+            type Output = $OUT;
+            fn mul($this, $rhs: $RHS) -> Self { $formula }
+        }
+    }
+}
+
+macro_rules! gen_div {
+    (for $this:ident, $rhs:ident: $RHS:ty as $OUT:ty = $formula:expr) => {
+        impl Div<$RHS> for $OUT {
+            type Output = $OUT;
+            fn div($this, $rhs: $RHS) -> Self { $formula }
         }
     }
 }
@@ -19,7 +57,7 @@ macro_rules! gen_op_impl {
 
 pub mod time {
     use std::convert::From;
-    use std::ops::{Add, Sub};
+    use std::ops::{Add, Div, Sub, Mul};
 
     #[derive(PartialEq, Eq, PartialOrd, Ord, Debug, Copy, Clone)]
     pub struct      Sec(pub u64);
@@ -46,16 +84,25 @@ pub mod time {
     gen_converter! { for t, MicroSec => Sec = Sec(t.0 / 1_000_000) }
     gen_converter! { for t,  NanoSec => Sec = Sec(t.0 / 1_000_000_000) }
 
+    gen_add! { for self, rhs as Sec      =      Sec(self.0 + rhs.0) }
+    gen_add! { for self, rhs as MilliSec = MilliSec(self.0 + rhs.0) }
+    gen_add! { for self, rhs as MicroSec = MicroSec(self.0 + rhs.0) }
+    gen_add! { for self, rhs as  NanoSec =  NanoSec(self.0 + rhs.0) }
 
-    gen_op_impl! { for self, rhs as Sec      : add<Add> =      Sec(self.0 + rhs.0) }
-    gen_op_impl! { for self, rhs as MilliSec : add<Add> = MilliSec(self.0 + rhs.0) }
-    gen_op_impl! { for self, rhs as MicroSec : add<Add> = MicroSec(self.0 + rhs.0) }
-    gen_op_impl! { for self, rhs as  NanoSec : add<Add> =  NanoSec(self.0 + rhs.0) }
+    gen_sub! { for self, rhs as Sec      =      Sec(self.0 - rhs.0) }
+    gen_sub! { for self, rhs as MilliSec = MilliSec(self.0 - rhs.0) }
+    gen_sub! { for self, rhs as MicroSec = MicroSec(self.0 - rhs.0) }
+    gen_sub! { for self, rhs as  NanoSec =  NanoSec(self.0 - rhs.0) }
 
-    gen_op_impl! { for self, rhs as Sec      : sub<Sub> =      Sec(self.0 - rhs.0) }
-    gen_op_impl! { for self, rhs as MilliSec : sub<Sub> = MilliSec(self.0 - rhs.0) }
-    gen_op_impl! { for self, rhs as MicroSec : sub<Sub> = MicroSec(self.0 - rhs.0) }
-    gen_op_impl! { for self, rhs as  NanoSec : sub<Sub> =  NanoSec(self.0 - rhs.0) }
+    gen_mul! { for self, rhs: u64 as Sec      =      Sec(self.0 * rhs) }
+    gen_mul! { for self, rhs: u64 as MilliSec = MilliSec(self.0 * rhs) }
+    gen_mul! { for self, rhs: u64 as MicroSec = MicroSec(self.0 * rhs) }
+    gen_mul! { for self, rhs: u64 as  NanoSec =  NanoSec(self.0 * rhs) }
+
+    gen_div! { for self, rhs: u64 as Sec      =      Sec(self.0 / rhs) }
+    gen_div! { for self, rhs: u64 as MilliSec = MilliSec(self.0 / rhs) }
+    gen_div! { for self, rhs: u64 as MicroSec = MicroSec(self.0 / rhs) }
+    gen_div! { for self, rhs: u64 as  NanoSec =  NanoSec(self.0 / rhs) }
 
 }
 
@@ -76,6 +123,20 @@ mod time_tests {
         let t1 = Sec(5);
         assert_eq!(Sec(5), t0 - t1);
     }
+
+    #[test]
+    fn mul_seconds() {
+        let t0 = Sec(10);
+        assert_eq!(Sec(30), t0 * 3);
+    }
+
+    #[test]
+    fn div_seconds() {
+        let t0 = Sec(30);
+        assert_eq!(Sec(10), t0 / 3);
+    }
+
+
 
     #[test]
     fn seconds_to_nanoseconds() {
@@ -99,6 +160,7 @@ mod time_tests {
     }
 
 
+
     #[test]
     fn seconds_to_milliseconds() {
         let secs = Sec(300);
@@ -119,6 +181,7 @@ mod time_tests {
         let millis: MilliSec = nanos.into();
         assert_eq!(nanos.0 / 1_000_000, millis.0);
     }
+
 
 
     #[test]

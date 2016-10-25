@@ -1,4 +1,4 @@
-macro_rules! gen_converter {
+macro_rules! conversion {
     (for $from:ident, $fromtype:ty => $totype:ty = $formula:expr) => {
         impl From<$fromtype> for $totype {
             fn from($from: $fromtype) -> Self { $formula }
@@ -68,41 +68,42 @@ pub mod time {
     #[derive(PartialEq, Eq, PartialOrd, Ord, Debug, Copy, Clone)]
     pub struct  NanoSec(pub u64);
 
-    gen_converter! { for t,      Sec => NanoSec = NanoSec(t.0 * 1_000_000_000) }
-    gen_converter! { for t, MilliSec => NanoSec = NanoSec(t.0 * 1_000_000) }
-    gen_converter! { for t, MicroSec => NanoSec = NanoSec(t.0 * 1_000) }
+    conversion! { for t,      Sec => NanoSec = NanoSec(t.0 * 1_000_000_000) }
+    conversion! { for t, MilliSec => NanoSec = NanoSec(t.0 * 1_000_000) }
+    conversion! { for t, MicroSec => NanoSec = NanoSec(t.0 * 1_000) }
 
-    gen_converter! { for t,      Sec => MicroSec = MicroSec(t.0 * 1_000_000) }
-    gen_converter! { for t, MilliSec => MicroSec = MicroSec(t.0 * 1_000) }
-    gen_converter! { for t,  NanoSec => MicroSec = MicroSec(t.0 / 1_000) }
+    conversion! { for t,      Sec => MicroSec = MicroSec(t.0 * 1_000_000) }
+    conversion! { for t, MilliSec => MicroSec = MicroSec(t.0 * 1_000) }
+    conversion! { for t,  NanoSec => MicroSec = MicroSec(t.0 / 1_000) }
 
-    gen_converter! { for t,      Sec => MilliSec = MilliSec(t.0 * 1_000) }
-    gen_converter! { for t, MicroSec => MilliSec = MilliSec(t.0 / 1_000) }
-    gen_converter! { for t,  NanoSec => MilliSec = MilliSec(t.0 / 1_000_000) }
+    conversion! { for t,      Sec => MilliSec = MilliSec(t.0 * 1_000) }
+    conversion! { for t, MicroSec => MilliSec = MilliSec(t.0 / 1_000) }
+    conversion! { for t,  NanoSec => MilliSec = MilliSec(t.0 / 1_000_000) }
 
-    gen_converter! { for t, MilliSec => Sec = Sec(t.0 / 1_000) }
-    gen_converter! { for t, MicroSec => Sec = Sec(t.0 / 1_000_000) }
-    gen_converter! { for t,  NanoSec => Sec = Sec(t.0 / 1_000_000_000) }
+    conversion! { for t, MilliSec => Sec = Sec(t.0 / 1_000) }
+    conversion! { for t, MicroSec => Sec = Sec(t.0 / 1_000_000) }
+    conversion! { for t,  NanoSec => Sec = Sec(t.0 / 1_000_000_000) }
 
-    gen_add! { for self, rhs as Sec      =      Sec(self.0 + rhs.0) }
-    gen_add! { for self, rhs as MilliSec = MilliSec(self.0 + rhs.0) }
-    gen_add! { for self, rhs as MicroSec = MicroSec(self.0 + rhs.0) }
-    gen_add! { for self, rhs as  NanoSec =  NanoSec(self.0 + rhs.0) }
 
-    gen_sub! { for self, rhs as Sec      =      Sec(self.0 - rhs.0) }
-    gen_sub! { for self, rhs as MilliSec = MilliSec(self.0 - rhs.0) }
-    gen_sub! { for self, rhs as MicroSec = MicroSec(self.0 - rhs.0) }
-    gen_sub! { for self, rhs as  NanoSec =  NanoSec(self.0 - rhs.0) }
+    gen_add! { for self, rhs      as Sec = Sec(self.0 + rhs.0) }
+    gen_sub! { for self, rhs      as Sec = Sec(self.0 - rhs.0) }
+    gen_mul! { for self, rhs: u64 as Sec = Sec(self.0 * rhs) }
+    gen_div! { for self, rhs: u64 as Sec = Sec(self.0 / rhs) }
 
-    gen_mul! { for self, rhs: u64 as Sec      =      Sec(self.0 * rhs) }
-    gen_mul! { for self, rhs: u64 as MilliSec = MilliSec(self.0 * rhs) }
-    gen_mul! { for self, rhs: u64 as MicroSec = MicroSec(self.0 * rhs) }
-    gen_mul! { for self, rhs: u64 as  NanoSec =  NanoSec(self.0 * rhs) }
+    gen_add! { for self, rhs      as MilliSec = MilliSec(self.0 + rhs.0) }
+    gen_sub! { for self, rhs      as MilliSec = MilliSec(self.0 - rhs.0) }
+    gen_mul! { for self, rhs: u64 as MilliSec = MilliSec(self.0 * rhs)   }
+    gen_div! { for self, rhs: u64 as MilliSec = MilliSec(self.0 / rhs)   }
 
-    gen_div! { for self, rhs: u64 as Sec      =      Sec(self.0 / rhs) }
-    gen_div! { for self, rhs: u64 as MilliSec = MilliSec(self.0 / rhs) }
-    gen_div! { for self, rhs: u64 as MicroSec = MicroSec(self.0 / rhs) }
-    gen_div! { for self, rhs: u64 as  NanoSec =  NanoSec(self.0 / rhs) }
+    gen_add! { for self, rhs      as MicroSec = MicroSec(self.0 + rhs.0) }
+    gen_sub! { for self, rhs      as MicroSec = MicroSec(self.0 - rhs.0) }
+    gen_mul! { for self, rhs: u64 as MicroSec = MicroSec(self.0 * rhs)   }
+    gen_div! { for self, rhs: u64 as MicroSec = MicroSec(self.0 / rhs)   }
+
+    gen_add! { for self, rhs      as NanoSec = NanoSec(self.0 + rhs.0) }
+    gen_sub! { for self, rhs      as NanoSec = NanoSec(self.0 - rhs.0) }
+    gen_mul! { for self, rhs: u64 as NanoSec = NanoSec(self.0 * rhs)   }
+    gen_div! { for self, rhs: u64 as NanoSec = NanoSec(self.0 / rhs)   }
 
 }
 

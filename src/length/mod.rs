@@ -326,349 +326,349 @@ mod length_tests {
 
     #[test]
     fn decameters_to_kilometers() {
-        let hm = DecaM(50);
-        assert_eq!(KiloM(hm.0 / 100), hm.into());
+        let dam = DecaM(50);
+        assert_eq!(KiloM(dam.0 / 100), dam.into());
     }
 
     #[test]
     fn decameters_to_hectometers() {
-        let hm = DecaM(50);
-        assert_eq!(HectoM(hm.0 / 10), hm.into());
+        let dam = DecaM(50);
+        assert_eq!(HectoM(dam.0 / 10), dam.into());
     }
 
     #[test]
     fn decameters_to_meters() {
-        let hm = DecaM(50);
-        assert_eq!(M(hm.0 * 10), hm.into());
+        let dam = DecaM(50);
+        assert_eq!(M(dam.0 * 10), dam.into());
     }
 
     #[test]
     fn decameters_to_decimeters() {
-        let hm = DecaM(50);
-        assert_eq!(DeciM(hm.0 * 100), hm.into());
+        let dam = DecaM(50);
+        assert_eq!(DeciM(dam.0 * 100), dam.into());
     }
 
     #[test]
     fn decameters_to_centimeters() {
-        let hm = DecaM(50);
-        assert_eq!(CentiM(hm.0 * 1_000), hm.into());
+        let dam = DecaM(50);
+        assert_eq!(CentiM(dam.0 * 1_000), dam.into());
     }
 
     #[test]
     fn decameters_to_millimeters() {
-        let hm = DecaM(50);
-        assert_eq!(MilliM(hm.0 * 10_000), hm.into());
+        let dam = DecaM(50);
+        assert_eq!(MilliM(dam.0 * 10_000), dam.into());
     }
 
     #[test]
     fn decameters_to_micrometers() {
-        let hm = DecaM(50);
-        assert_eq!(MicroM(hm.0 * 10_000_000), hm.into());
+        let dam = DecaM(50);
+        assert_eq!(MicroM(dam.0 * 10_000_000), dam.into());
     }
 
     #[test]
     fn decameters_to_nanometers() {
-        let hm = DecaM(50);
-        assert_eq!(NanoM(hm.0 * 10_000_000_000), hm.into());
+        let dam = DecaM(50);
+        assert_eq!(NanoM(dam.0 * 10_000_000_000), dam.into());
     }
 
 
 
     #[test]
     fn meters_to_kilometers() {
-        let hm = M(50);
-        assert_eq!(KiloM(hm.0 / 1000), hm.into());
+        let m = M(50);
+        assert_eq!(KiloM(m.0 / 1000), m.into());
     }
 
     #[test]
     fn meters_to_hectometers() {
-        let hm = M(50);
-        assert_eq!(HectoM(hm.0 / 100), hm.into());
+        let m = M(50);
+        assert_eq!(HectoM(m.0 / 100), m.into());
     }
 
     #[test]
     fn meters_to_decameters() {
-        let hm = M(50);
-        assert_eq!(DecaM(hm.0 / 10), hm.into());
+        let m = M(50);
+        assert_eq!(DecaM(m.0 / 10), m.into());
     }
 
     #[test]
     fn meters_to_decimeters() {
-        let hm = M(50);
-        assert_eq!(DeciM(hm.0 * 10), hm.into());
+        let m = M(50);
+        assert_eq!(DeciM(m.0 * 10), m.into());
     }
 
     #[test]
     fn meters_to_centimeters() {
-        let hm = M(50);
-        assert_eq!(CentiM(hm.0 * 100), hm.into());
+        let m = M(50);
+        assert_eq!(CentiM(m.0 * 100), m.into());
     }
 
     #[test]
     fn meters_to_millimeters() {
-        let hm = M(50);
-        assert_eq!(MilliM(hm.0 * 1_000), hm.into());
+        let m = M(50);
+        assert_eq!(MilliM(m.0 * 1_000), m.into());
     }
 
     #[test]
     fn meters_to_micrometers() {
-        let hm = M(50);
-        assert_eq!(MicroM(hm.0 * 1_000_000), hm.into());
+        let m = M(50);
+        assert_eq!(MicroM(m.0 * 1_000_000), m.into());
     }
 
     #[test]
     fn meters_to_nanometers() {
-        let hm = M(50);
-        assert_eq!(NanoM(hm.0 * 1_000_000_000), hm.into());
+        let m = M(50);
+        assert_eq!(NanoM(m.0 * 1_000_000_000), m.into());
     }
 
 
 
     #[test]
     fn decimeters_to_kilometers() {
-        let hm = DeciM(50);
-        assert_eq!(KiloM(hm.0 / 10_000), hm.into());
+        let dm = DeciM(50);
+        assert_eq!(KiloM(dm.0 / 10_000), dm.into());
     }
 
     #[test]
     fn decimeters_to_hectometers() {
-        let hm = DeciM(50);
-        assert_eq!(HectoM(hm.0 / 1_000), hm.into());
+        let dm = DeciM(50);
+        assert_eq!(HectoM(dm.0 / 1_000), dm.into());
     }
 
     #[test]
     fn decimeters_to_decameters() {
-        let hm = DeciM(50);
-        assert_eq!(DecaM(hm.0 / 100), hm.into());
+        let dm = DeciM(50);
+        assert_eq!(DecaM(dm.0 / 100), dm.into());
     }
 
     #[test]
     fn decimeters_to_meters() {
-        let hm = DeciM(50);
-        assert_eq!(M(hm.0 / 10), hm.into());
+        let dm = DeciM(50);
+        assert_eq!(M(dm.0 / 10), dm.into());
     }
 
     #[test]
     fn decimeters_to_centimeters() {
-        let hm = DeciM(50);
-        assert_eq!(CentiM(hm.0 * 10), hm.into());
+        let dm = DeciM(50);
+        assert_eq!(CentiM(dm.0 * 10), dm.into());
     }
 
     #[test]
     fn decimeters_to_millimeters() {
-        let hm = DeciM(50);
-        assert_eq!(MilliM(hm.0 * 100), hm.into());
+        let dm = DeciM(50);
+        assert_eq!(MilliM(dm.0 * 100), dm.into());
     }
 
     #[test]
     fn decimeters_to_micrometers() {
-        let hm = DeciM(50);
-        assert_eq!(MicroM(hm.0 * 100_000), hm.into());
+        let dm = DeciM(50);
+        assert_eq!(MicroM(dm.0 * 100_000), dm.into());
     }
 
     #[test]
     fn decimeters_to_nanometers() {
-        let hm = DeciM(50);
-        assert_eq!(NanoM(hm.0 * 100_000_000), hm.into());
+        let dm = DeciM(50);
+        assert_eq!(NanoM(dm.0 * 100_000_000), dm.into());
     }
 
 
     #[test]
     fn centimeters_to_kilometers() {
-        let hm = CentiM(50);
-        assert_eq!(KiloM(hm.0 / 10_000), hm.into());
+        let cm = CentiM(50);
+        assert_eq!(KiloM(cm.0 / 10_000), cm.into());
     }
 
     #[test]
     fn centimeters_to_hectometers() {
-        let hm = CentiM(50);
-        assert_eq!(HectoM(hm.0 / 1_000), hm.into());
+        let cm = CentiM(50);
+        assert_eq!(HectoM(cm.0 / 1_000), cm.into());
     }
 
     #[test]
     fn centimeters_to_decameters() {
-        let hm = CentiM(50);
-        assert_eq!(DecaM(hm.0 / 100), hm.into());
+        let cm = CentiM(50);
+        assert_eq!(DecaM(cm.0 / 100), cm.into());
     }
 
     #[test]
     fn centimeters_to_meters() {
-        let hm = CentiM(50);
-        assert_eq!(M(hm.0 / 100), hm.into());
+        let cm = CentiM(50);
+        assert_eq!(M(cm.0 / 100), cm.into());
     }
 
     #[test]
     fn centimeters_to_decimeters() {
-        let hm = CentiM(50);
-        assert_eq!(DeciM(hm.0 / 10), hm.into());
+        let cm = CentiM(50);
+        assert_eq!(DeciM(cm.0 / 10), cm.into());
     }
 
     #[test]
     fn centimeters_to_millimeters() {
-        let hm = CentiM(50);
-        assert_eq!(MilliM(hm.0 * 10), hm.into());
+        let cm = CentiM(50);
+        assert_eq!(MilliM(cm.0 * 10), cm.into());
     }
 
     #[test]
     fn centimeters_to_micrometers() {
-        let hm = CentiM(50);
-        assert_eq!(MicroM(hm.0 * 10_000), hm.into());
+        let cm = CentiM(50);
+        assert_eq!(MicroM(cm.0 * 10_000), cm.into());
     }
 
     #[test]
     fn centimeters_to_nanometers() {
-        let hm = CentiM(50);
-        assert_eq!(NanoM(hm.0 * 10_000_000), hm.into());
+        let cm = CentiM(50);
+        assert_eq!(NanoM(cm.0 * 10_000_000), cm.into());
     }
 
 
 
     #[test]
     fn millimeters_to_kilometers() {
-        let hm = MilliM(50);
-        assert_eq!(KiloM(hm.0 / 10_000), hm.into());
+        let mm = MilliM(50);
+        assert_eq!(KiloM(mm.0 / 10_000), mm.into());
     }
 
     #[test]
     fn millimeters_to_hectometers() {
-        let hm = MilliM(50);
-        assert_eq!(HectoM(hm.0 / 1_000), hm.into());
+        let mm = MilliM(50);
+        assert_eq!(HectoM(mm.0 / 1_000), mm.into());
     }
 
     #[test]
     fn millimeters_to_decameters() {
-        let hm = MilliM(50);
-        assert_eq!(DecaM(hm.0 / 10_000), hm.into());
+        let mm = MilliM(50);
+        assert_eq!(DecaM(mm.0 / 10_000), mm.into());
     }
 
     #[test]
     fn millimeters_to_meters() {
-        let hm = MilliM(50);
-        assert_eq!(M(hm.0 / 1000), hm.into());
+        let mm = MilliM(50);
+        assert_eq!(M(mm.0 / 1000), mm.into());
     }
 
     #[test]
     fn millimeters_to_decimeters() {
-        let hm = MilliM(50);
-        assert_eq!(DeciM(hm.0 / 100), hm.into());
+        let mm = MilliM(50);
+        assert_eq!(DeciM(mm.0 / 100), mm.into());
     }
 
     #[test]
     fn millimeters_to_centimeters() {
-        let hm = MilliM(50);
-        assert_eq!(CentiM(hm.0 / 10), hm.into());
+        let mm = MilliM(50);
+        assert_eq!(CentiM(mm.0 / 10), mm.into());
     }
 
     #[test]
     fn millimeters_to_micrometers() {
-        let hm = MilliM(50);
-        assert_eq!(MicroM(hm.0 * 1_000), hm.into());
+        let mm = MilliM(50);
+        assert_eq!(MicroM(mm.0 * 1_000), mm.into());
     }
 
     #[test]
     fn millimeters_to_nanometers() {
-        let hm = MilliM(50);
-        assert_eq!(NanoM(hm.0 * 1_000_000), hm.into());
+        let mm = MilliM(50);
+        assert_eq!(NanoM(mm.0 * 1_000_000), mm.into());
     }
 
 
 
     #[test]
     fn micrometers_to_kilometers() {
-        let hm = MicroM(50);
-        assert_eq!(KiloM(hm.0 / 1_000_000_000), hm.into());
+        let um = MicroM(50);
+        assert_eq!(KiloM(um.0 / 1_000_000_000), um.into());
     }
 
     #[test]
     fn micrometers_to_hectometers() {
-        let hm = MicroM(50);
-        assert_eq!(HectoM(hm.0 / 100_000_000), hm.into());
+        let um = MicroM(50);
+        assert_eq!(HectoM(um.0 / 100_000_000), um.into());
     }
 
     #[test]
     fn micrometers_to_decameters() {
-        let hm = MicroM(50);
-        assert_eq!(DecaM(hm.0 / 10_000_000), hm.into());
+        let um = MicroM(50);
+        assert_eq!(DecaM(um.0 / 10_000_000), um.into());
     }
 
     #[test]
     fn micrometers_to_meters() {
-        let hm = MicroM(50);
-        assert_eq!(M(hm.0 / 1_000_000), hm.into());
+        let um = MicroM(50);
+        assert_eq!(M(um.0 / 1_000_000), um.into());
     }
 
     #[test]
     fn micrometers_to_decimeters() {
-        let hm = MicroM(50);
-        assert_eq!(DeciM(hm.0 / 100_000), hm.into());
+        let um = MicroM(50);
+        assert_eq!(DeciM(um.0 / 100_000), um.into());
     }
 
     #[test]
     fn micrometers_to_centimeters() {
-        let hm = MicroM(50);
-        assert_eq!(CentiM(hm.0 / 10_000), hm.into());
+        let um = MicroM(50);
+        assert_eq!(CentiM(um.0 / 10_000), um.into());
     }
 
     #[test]
     fn micrometers_to_millimeters() {
-        let hm = MicroM(50);
-        assert_eq!(MilliM(hm.0 / 1_000), hm.into());
+        let um = MicroM(50);
+        assert_eq!(MilliM(um.0 / 1_000), um.into());
     }
 
     #[test]
     fn micrometers_to_nanometers() {
-        let hm = MicroM(50);
-        assert_eq!(NanoM(hm.0 * 1_000), hm.into());
+        let um = MicroM(50);
+        assert_eq!(NanoM(um.0 * 1_000), um.into());
     }
 
 
 
     #[test]
     fn nanometers_to_kilometers() {
-        let hm = NanoM(50);
-        assert_eq!(KiloM(hm.0 / 1_000_000_000_000), hm.into());
+        let nm = NanoM(50);
+        assert_eq!(KiloM(nm.0 / 1_000_000_000_000), nm.into());
     }
 
     #[test]
     fn nanometers_to_hectometers() {
-        let hm = NanoM(50);
-        assert_eq!(HectoM(hm.0 / 100_000_000_000), hm.into());
+        let nm = NanoM(50);
+        assert_eq!(HectoM(nm.0 / 100_000_000_000), nm.into());
     }
 
     #[test]
     fn nanometers_to_decameters() {
-        let hm = NanoM(50);
-        assert_eq!(DecaM(hm.0 / 10_000_000_000), hm.into());
+        let nm = NanoM(50);
+        assert_eq!(DecaM(nm.0 / 10_000_000_000), nm.into());
     }
 
     #[test]
     fn nanometers_to_meters() {
-        let hm = NanoM(50);
-        assert_eq!(M(hm.0 / 1_000_000_000), hm.into());
+        let nm = NanoM(50);
+        assert_eq!(M(nm.0 / 1_000_000_000), nm.into());
     }
 
     #[test]
     fn nanometers_to_decimeters() {
-        let hm = NanoM(50);
-        assert_eq!(DeciM(hm.0 / 100_000_000), hm.into());
+        let nm = NanoM(50);
+        assert_eq!(DeciM(nm.0 / 100_000_000), nm.into());
     }
 
     #[test]
     fn nanometers_to_centimeters() {
-        let hm = NanoM(50);
-        assert_eq!(CentiM(hm.0 / 10_000_000), hm.into());
+        let nm = NanoM(50);
+        assert_eq!(CentiM(nm.0 / 10_000_000), nm.into());
     }
 
     #[test]
     fn nanometers_to_millimeters() {
-        let hm = NanoM(50);
-        assert_eq!(MilliM(hm.0 / 1_000), hm.into());
+        let nm = NanoM(50);
+        assert_eq!(MilliM(nm.0 / 1_000), nm.into());
     }
 
     #[test]
     fn nanometers_to_micrometers() {
-        let hm = NanoM(50);
-        assert_eq!(MicroM(hm.0 / 1_000), hm.into());
+        let nm = NanoM(50);
+        assert_eq!(MicroM(nm.0 / 1_000), nm.into());
     }
 
 

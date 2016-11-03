@@ -48,75 +48,59 @@ mod time_tests {
     use time::*;
 
     #[test]
-    fn add_seconds() {
-        let t0 = Sec(10);
-        let t1 = Sec(5);
-        assert_eq!(Sec(15), t0 + t1);
-    }
+    fn add_seconds() { assert_eq!(Sec(15), Sec(10) + Sec(5)); }
+    #[test]
+    fn sub_seconds() { assert_eq!(Sec(5), Sec(10) - Sec(5)); }
+    #[test]
+    fn mul_seconds() { assert_eq!(Sec(30), Sec(10) * 3); }
+    #[test]
+    fn div_seconds() { assert_eq!(Sec(10), Sec(30) / 3); }
 
     #[test]
-    fn sub_seconds() {
-        let t0 = Sec(10);
-        let t1 = Sec(5);
-        assert_eq!(Sec(5), t0 - t1);
-    }
+    fn add_milliseconds() { assert_eq!(MilliSec(15), MilliSec(10) + MilliSec(5)); }
+    #[test]
+    fn sub_milliseconds() { assert_eq!(MilliSec(5), MilliSec(10) - MilliSec(5)); }
+    #[test]
+    fn mul_milliseconds() { assert_eq!(MilliSec(30), MilliSec(10) * 3); }
+    #[test]
+    fn div_milliseconds() { assert_eq!(MilliSec(10), MilliSec(30) / 3); }
 
     #[test]
-    fn mul_seconds() {
-        let t0 = Sec(10);
-        assert_eq!(Sec(30), t0 * 3);
-    }
+    fn add_microseconds() { assert_eq!(MicroSec(15), MicroSec(10) + MicroSec(5)); }
+    #[test]
+    fn sub_microseconds() { assert_eq!(MicroSec(5), MicroSec(10) - MicroSec(5)); }
+    #[test]
+    fn mul_microseconds() { assert_eq!(MicroSec(30), MicroSec(10) * 3); }
+    #[test]
+    fn div_microseconds() { assert_eq!(MicroSec(10), MicroSec(30) / 3); }
 
     #[test]
-    fn div_seconds() {
-        let t0 = Sec(30);
-        assert_eq!(Sec(10), t0 / 3);
-    }
-
-
-
+    fn add_nanoseconds() { assert_eq!(NanoSec(15), NanoSec(10) + NanoSec(5)); }
     #[test]
-    fn seconds_to_nanoseconds() {
-        let secs = Sec(300);
-        let nanos: NanoSec = secs.into();
-        assert_eq!(secs.0 * 1_000_000_000, nanos.0);
-    }
-
+    fn sub_nanoseconds() { assert_eq!(NanoSec(5), NanoSec(10) - NanoSec(5)); }
     #[test]
-    fn milliseconds_to_nanoseconds() {
-        let millis = MilliSec(2_000);
-        let nanos: NanoSec = millis.into();
-        assert_eq!(millis.0 * 1_000_000, nanos.0);
-    }
-
+    fn mul_nanoseconds() { assert_eq!(NanoSec(30), NanoSec(10) * 3); }
     #[test]
-    fn microseconds_to_nanoseconds() {
-        let micros = MicroSec(2_000_000);
-        let nanos: NanoSec = micros.into();
-        assert_eq!(micros.0 * 1_000, nanos.0);
-    }
+    fn div_nanoseconds() { assert_eq!(NanoSec(10), NanoSec(30) / 3); }
 
 
 
     #[test]
     fn seconds_to_milliseconds() {
         let secs = Sec(300);
-        let millis: MilliSec = secs.into();
-        assert_eq!(secs.0 * 1_000, millis.0);
+        assert_eq!(MilliSec(secs.0 * 1_000), secs.into());
     }
 
     #[test]
-    fn microseconds_to_milliseconds() {
-        let micros = MicroSec(300);
-        let millis: MilliSec = micros.into();
-        assert_eq!(micros.0 / 1_000, millis.0);
+    fn seconds_to_microseconds() {
+        let secs = Sec(300);
+        assert_eq!(MicroSec(secs.0 * 1_000_000), secs.into());
     }
 
     #[test]
-    fn nanoseconds_to_milliseconds() {
-        let nanos = NanoSec(300);
-        let millis: MilliSec = nanos.into();
-        assert_eq!(nanos.0 / 1_000_000, millis.0);
+    fn seconds_to_nanoseconds() {
+        let secs = Sec(300);
+        assert_eq!(NanoSec(secs.0 * 1_000_000_000), secs.into());
     }
 
 
@@ -124,22 +108,63 @@ mod time_tests {
     #[test]
     fn milliseconds_to_seconds() {
         let millis = MilliSec(2_000);
-        let secs: Sec = millis.into();
-        assert_eq!(millis.0 / 1_000, secs.0);
+        assert_eq!(Sec(millis.0 / 1_000), millis.into());
     }
+
+    #[test]
+    fn milliseconds_to_microseconds() {
+        let millis = MilliSec(2_000);
+        assert_eq!(MicroSec(millis.0 * 1_000), millis.into());
+    }
+
+    #[test]
+    fn milliseconds_to_nanoseconds() {
+        let millis = MilliSec(2_000);
+        assert_eq!(NanoSec(millis.0 * 1_000_000), millis.into());
+    }
+
 
 
     #[test]
     fn microseconds_to_seconds() {
         let micros = MicroSec(2_000_000);
-        let secs: Sec = micros.into();
-        assert_eq!(micros.0 / 1_000_000, secs.0);
+        assert_eq!(Sec(micros.0 / 1_000_000), micros.into());
     }
+
+    #[test]
+    fn microseconds_to_milliseconds() {
+        let micros = MicroSec(300);
+        assert_eq!(MilliSec(micros.0 / 1_000), micros.into());
+    }
+
+    #[test]
+    fn microseconds_to_nanoseconds() {
+        let micros = MicroSec(2_000_000);
+        assert_eq!(NanoSec(micros.0 * 1_000), micros.into());
+    }
+
+
 
     #[test]
     fn nanoseconds_to_seconds() {
         let nanos = NanoSec(2_000_000_000);
         let secs: Sec = nanos.into();
-        assert_eq!(secs.0, nanos.0 / 1_000_000_000);
+        assert_eq!(Sec(nanos.0 / 1_000_000_000), secs);
     }
+
+    #[test]
+    fn nanoseconds_to_milliseconds() {
+        let nanos = NanoSec(300);
+        let millis: MilliSec = nanos.into();
+        assert_eq!(MilliSec(nanos.0 / 1_000_000), millis);
+    }
+
+    #[test]
+    fn nanoseconds_to_microseconds() {
+        let nanos = NanoSec(2_000_000_000);
+        assert_eq!(MicroSec(nanos.0 / 1_000), nanos.into());
+    }
+
+
+
 }

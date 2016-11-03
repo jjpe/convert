@@ -60,13 +60,13 @@ pub mod time {
     use std::ops::{Add, Div, Sub, Mul};
 
     #[derive(PartialEq, Eq, PartialOrd, Ord, Debug, Copy, Clone)]
-    pub struct      Sec(pub u64);
+    pub struct      Sec(u64);
     #[derive(PartialEq, Eq, PartialOrd, Ord, Debug, Copy, Clone)]
-    pub struct MilliSec(pub u64);
+    pub struct MilliSec(u64);
     #[derive(PartialEq, Eq, PartialOrd, Ord, Debug, Copy, Clone)]
-    pub struct MicroSec(pub u64);
+    pub struct MicroSec(u64);
     #[derive(PartialEq, Eq, PartialOrd, Ord, Debug, Copy, Clone)]
-    pub struct  NanoSec(pub u64);
+    pub struct  NanoSec(u64);
 
     conversion! { for t,      Sec => NanoSec = NanoSec(t.0 * 1_000_000_000) }
     conversion! { for t, MilliSec => NanoSec = NanoSec(t.0 * 1_000_000) }

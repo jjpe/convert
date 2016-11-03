@@ -1,55 +1,65 @@
-macro_rules! conversion {
-    (for $from:ident, $fromtype:ty => $totype:ty = $formula:expr) => {
-        impl From<$fromtype> for $totype {
-            fn from($from: $fromtype) -> Self { $formula }
-        }
-    }
+//! This crate deals with physical units.
+//! It's only a matter of time until other units get added, har har :)
+
+/// Define one or more units.
+macro_rules! defunit {
+    ($name:ident( $($fields:ty),+ )) => {
+        #[derive(PartialEq, Eq, PartialOrd, Ord, Debug, Copy, Clone)]
+        pub struct $name($(pub $fields)+);
+    };
+    ($($names:ident( $($fields:ty),+ )),+) => {
+        $(
+            defunit! { $names( $($fields),+ ) }
+        )+
+    };
 }
 
-// /// Generate an operation.
-// macro_rules! gen_op {
-//     (for $this:ident, $rhs:ident as $out_type:ty :
-//      $op_name:ident<$op_type:ty> = $result:expr) => {
-//         impl $op_type for $out_type {
-//             type Output = $out_type;
-//             fn $op_name($this, $rhs: Self) -> Self { $result }
-//         }
-//     }
-// }
+/// Define a conversion between 2 units.
+macro_rules! conversion {
+    (for $from:ident: $fromtype:ty => $totype:tt = $formula:expr) => {
+        impl From<$fromtype> for $totype {
+            fn from($from: $fromtype) -> Self { $totype($formula) }
+        }
+    };
+}
 
 
-macro_rules! gen_add {
-    (for $this:ident, $rhs:ident as $OUT:ty = $formula:expr) => {
+/// Define addition for a unit.
+macro_rules! defadd {
+    (for $this:ident: $OUT:tt, $rhs:ident = $formula:expr) => {
         impl Add for $OUT {
             type Output = $OUT;
-            fn add($this, $rhs: Self) -> Self { $formula }
+            fn add($this, $rhs: Self) -> Self { $OUT($formula) }
         }
-    }
+    };
 }
 
-macro_rules! gen_sub {
-    (for $this:ident, $rhs:ident as $OUT:ty = $formula:expr) => {
+/// Define subtraction for a unit.
+macro_rules! defsub {
+    (for $this:ident: $OUT:tt, $rhs:ident = $formula:expr) => {
         impl Sub for $OUT {
             type Output = $OUT;
-            fn sub($this, $rhs: Self) -> Self { $formula }
+            fn sub($this, $rhs: Self) -> Self { $OUT($formula) }
         }
     }
 }
 
-macro_rules! gen_mul {
-    (for $this:ident, $rhs:ident: $RHS:ty as $OUT:ty = $formula:expr) => {
+/// Define multiplication for a unit.
+macro_rules! defmul {
+    (for $this:ident: $OUT:tt, $rhs:ident: $RHS:ty = $formula:expr) => {
         impl Mul<$RHS> for $OUT {
             type Output = $OUT;
-            fn mul($this, $rhs: $RHS) -> Self { $formula }
+            fn mul($this, $rhs: $RHS) -> Self { $OUT($formula) }
         }
     }
 }
 
-macro_rules! gen_div {
-    (for $this:ident, $rhs:ident: $RHS:ty as $OUT:ty = $formula:expr) => {
+/// Define division for a unit.
+macro_rules! defdiv {
+    (for $this:ident: $OUT:tt, $rhs:ident: $RHS:ty = $formula:expr) => {
         impl Div<$RHS> for $OUT {
             type Output = $OUT;
-            fn div($this, $rhs: $RHS) -> Self { $formula }
+            fn div($this, $rhs: $RHS) -> Self { $OUT($formula) }
         }
     }
 }
@@ -59,51 +69,44 @@ pub mod time {
     use std::convert::From;
     use std::ops::{Add, Div, Sub, Mul};
 
-    #[derive(PartialEq, Eq, PartialOrd, Ord, Debug, Copy, Clone)]
-    pub struct      Sec(u64);
-    #[derive(PartialEq, Eq, PartialOrd, Ord, Debug, Copy, Clone)]
-    pub struct MilliSec(u64);
-    #[derive(PartialEq, Eq, PartialOrd, Ord, Debug, Copy, Clone)]
-    pub struct MicroSec(u64);
-    #[derive(PartialEq, Eq, PartialOrd, Ord, Debug, Copy, Clone)]
-    pub struct  NanoSec(u64);
+    defunit! { Sec(u64), MilliSec(u64), MicroSec(u64), NanoSec(u64) }
 
-    conversion! { for t,      Sec => NanoSec = NanoSec(t.0 * 1_000_000_000) }
-    conversion! { for t, MilliSec => NanoSec = NanoSec(t.0 * 1_000_000) }
-    conversion! { for t, MicroSec => NanoSec = NanoSec(t.0 * 1_000) }
+    conversion! { for t: Sec => MilliSec = t.0 *         1_000 }
+    conversion! { for t: Sec => MicroSec = t.0 *     1_000_000 }
+    conversion! { for t: Sec => NanoSec  = t.0 * 1_000_000_000 }
 
-    conversion! { for t,      Sec => MicroSec = MicroSec(t.0 * 1_000_000) }
-    conversion! { for t, MilliSec => MicroSec = MicroSec(t.0 * 1_000) }
-    conversion! { for t,  NanoSec => MicroSec = MicroSec(t.0 / 1_000) }
+    conversion! { for t: MilliSec =>      Sec = t.0 / 1_000     }
+    conversion! { for t: MilliSec => MicroSec = t.0 * 1_000     }
+    conversion! { for t: MilliSec =>  NanoSec = t.0 * 1_000_000 }
 
-    conversion! { for t,      Sec => MilliSec = MilliSec(t.0 * 1_000) }
-    conversion! { for t, MicroSec => MilliSec = MilliSec(t.0 / 1_000) }
-    conversion! { for t,  NanoSec => MilliSec = MilliSec(t.0 / 1_000_000) }
+    conversion! { for t: MicroSec =>      Sec = t.0 / 1_000_000 }
+    conversion! { for t: MicroSec => MilliSec = t.0 / 1_000     }
+    conversion! { for t: MicroSec =>  NanoSec = t.0 * 1_000     }
 
-    conversion! { for t, MilliSec => Sec = Sec(t.0 / 1_000) }
-    conversion! { for t, MicroSec => Sec = Sec(t.0 / 1_000_000) }
-    conversion! { for t,  NanoSec => Sec = Sec(t.0 / 1_000_000_000) }
+    conversion! { for t: NanoSec =>      Sec = t.0 / 1_000_000_000 }
+    conversion! { for t: NanoSec => MilliSec = t.0 /     1_000_000 }
+    conversion! { for t: NanoSec => MicroSec = t.0 /         1_000 }
 
 
-    gen_add! { for self, rhs      as Sec = Sec(self.0 + rhs.0) }
-    gen_sub! { for self, rhs      as Sec = Sec(self.0 - rhs.0) }
-    gen_mul! { for self, rhs: u64 as Sec = Sec(self.0 * rhs) }
-    gen_div! { for self, rhs: u64 as Sec = Sec(self.0 / rhs) }
+    defadd! { for self: Sec, rhs      = self.0 + rhs.0 }
+    defsub! { for self: Sec, rhs      = self.0 - rhs.0 }
+    defmul! { for self: Sec, rhs: u64 = self.0 * rhs   }
+    defdiv! { for self: Sec, rhs: u64 = self.0 / rhs   }
 
-    gen_add! { for self, rhs      as MilliSec = MilliSec(self.0 + rhs.0) }
-    gen_sub! { for self, rhs      as MilliSec = MilliSec(self.0 - rhs.0) }
-    gen_mul! { for self, rhs: u64 as MilliSec = MilliSec(self.0 * rhs)   }
-    gen_div! { for self, rhs: u64 as MilliSec = MilliSec(self.0 / rhs)   }
+    defadd! { for self: MilliSec, rhs      = self.0 + rhs.0 }
+    defsub! { for self: MilliSec, rhs      = self.0 - rhs.0 }
+    defmul! { for self: MilliSec, rhs: u64 = self.0 * rhs   }
+    defdiv! { for self: MilliSec, rhs: u64 = self.0 / rhs   }
 
-    gen_add! { for self, rhs      as MicroSec = MicroSec(self.0 + rhs.0) }
-    gen_sub! { for self, rhs      as MicroSec = MicroSec(self.0 - rhs.0) }
-    gen_mul! { for self, rhs: u64 as MicroSec = MicroSec(self.0 * rhs)   }
-    gen_div! { for self, rhs: u64 as MicroSec = MicroSec(self.0 / rhs)   }
+    defadd! { for self: MicroSec, rhs      = self.0 + rhs.0 }
+    defsub! { for self: MicroSec, rhs      = self.0 - rhs.0 }
+    defmul! { for self: MicroSec, rhs: u64 = self.0 * rhs   }
+    defdiv! { for self: MicroSec, rhs: u64 = self.0 / rhs   }
 
-    gen_add! { for self, rhs      as NanoSec = NanoSec(self.0 + rhs.0) }
-    gen_sub! { for self, rhs      as NanoSec = NanoSec(self.0 - rhs.0) }
-    gen_mul! { for self, rhs: u64 as NanoSec = NanoSec(self.0 * rhs)   }
-    gen_div! { for self, rhs: u64 as NanoSec = NanoSec(self.0 / rhs)   }
+    defadd! { for self: NanoSec, rhs      = self.0 + rhs.0 }
+    defsub! { for self: NanoSec, rhs      = self.0 - rhs.0 }
+    defmul! { for self: NanoSec, rhs: u64 = self.0 * rhs   }
+    defdiv! { for self: NanoSec, rhs: u64 = self.0 / rhs   }
 
 }
 

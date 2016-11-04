@@ -35,13 +35,13 @@ mod speed_tests {
 
     #[test]
     fn create_mps() {
-        let (m, s) = (M(30), Sec(100.0));
+        let (m, s) = (M(30.0), Sec(100.0));
         assert_eq!(MPerSec(0.3), m / s);
     }
 
     #[test]
     fn create_kmph() {
-        let (km, h) = (KiloM(1201), Hour(2.0));
+        let (km, h) = (KiloM(1201.0), Hour(2.0));
         assert_eq!(KmPerHour(600.5), km / h);
     }
 
@@ -49,13 +49,13 @@ mod speed_tests {
 
     #[test]
     fn kmph_to_mps() {
-        let (km, h) = (KiloM(3600), Hour(1.0));
+        let (km, h) = (KiloM(3600.0), Hour(1.0));
         assert_eq!(km / h, MPerSec(1000.0).into());
     }
 
     #[test]
     fn mps_to_kmph() {
-        let (m, s) = (M(1000), Sec(1.0));
+        let (m, s) = (M(1000.0), Sec(1.0));
         assert_eq!(m / s, KmPerHour(3600.0).into());
     }
 

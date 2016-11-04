@@ -28,7 +28,7 @@ conversion! { for (s: KmPerHour) to   MPerSec = s.0 / 3.6 }
 
 
 #[cfg(test)]
-mod speed_tests {
+mod test {
     use length::*;
     use time::*;
     use speed::*;

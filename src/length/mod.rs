@@ -138,7 +138,7 @@ defdiv! { for self: NanoM, rhs: f64 = self.0 / rhs   }
 
 
 #[cfg(test)]
-mod length_tests {
+mod test {
     use length::*;
 
     #[test]

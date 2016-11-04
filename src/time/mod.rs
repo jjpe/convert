@@ -96,7 +96,7 @@ defdiv! { for self: NanoSec, rhs: f64 = self.0 / rhs   }
 
 
 #[cfg(test)]
-mod time_tests {
+mod test {
     use time::*;
 
     #[test]

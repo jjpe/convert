@@ -34,42 +34,19 @@ mod speed_tests {
     use speed::*;
 
     #[test]
-    fn create_mps() {
-        let (m, s) = (M(30.0), Sec(100.0));
-        assert_eq!(MPerSec(0.3), m / s);
-    }
+    fn create_mps() { assert_eq!(MPerSec(0.3), M(30.0) / Sec(100.0)); }
+    #[test]
+    fn create_kmph() { assert_eq!(KmPerHour(600.5), KiloM(1201.0) / Hour(2.0)); }
 
     #[test]
-    fn create_kmph() {
-        let (km, h) = (KiloM(1201.0), Hour(2.0));
-        assert_eq!(KmPerHour(600.5), km / h);
-    }
-
-
+    fn kmph_to_mps() { assert_eq!(KiloM(3600.0) / Hour(1.0), MPerSec(1000.0).into()); }
+    #[test]
+    fn mps_to_kmph() { assert_eq!(M(1000.0) / Sec(1.0), KmPerHour(3600.0).into()); }
 
     #[test]
-    fn kmph_to_mps() {
-        let (km, h) = (KiloM(3600.0), Hour(1.0));
-        assert_eq!(km / h, MPerSec(1000.0).into());
-    }
-
+    fn add_mps() { assert_eq!(MPerSec(15.5), MPerSec(10.2) + MPerSec(5.3)); }
     #[test]
-    fn mps_to_kmph() {
-        let (m, s) = (M(1000.0), Sec(1.0));
-        assert_eq!(m / s, KmPerHour(3600.0).into());
-    }
-
-
-
-    #[test]
-    fn add_mps() {
-        assert_eq!(MPerSec(15.5), MPerSec(10.2) + MPerSec(5.3));
-    }
-
-    #[test]
-    fn add_kmph() {
-        assert_eq!(KmPerHour(15.0), KmPerHour(10.0) + KmPerHour(5.0));
-    }
+    fn add_kmph() { assert_eq!(KmPerHour(15.0), KmPerHour(10.0) + KmPerHour(5.0)); }
 
 
 }

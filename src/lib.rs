@@ -4,7 +4,7 @@
 /// Define one or more units.
 macro_rules! defunit {
     ($name:ident( $($fields:ty),+ )) => {
-        #[derive(PartialEq, Eq, PartialOrd, Ord, Debug, Copy, Clone)]
+        #[derive(PartialEq, PartialOrd, Debug, Copy, Clone)]
         pub struct $name($(pub $fields)+);
     };
     ($($names:ident( $($fields:ty),+ )),+) => {

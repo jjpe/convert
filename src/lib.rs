@@ -16,6 +16,11 @@ macro_rules! defunit {
 
 /// Define a conversion between 2 units.
 macro_rules! conversion {
+    (for ($from:ident: $fromtype:ty) to $totype:tt = $formula:expr) => {
+        impl From<$fromtype> for $totype {
+            fn from($from: $fromtype) -> $totype { $totype($formula) }
+        }
+    };
     (for $from:ident: $fromtype:ty => $totype:tt = $formula:expr) => {
         impl From<$fromtype> for $totype {
             fn from($from: $fromtype) -> Self { $totype($formula) }
@@ -56,13 +61,22 @@ macro_rules! defmul {
 
 /// Define division for a unit.
 macro_rules! defdiv {
+    (for ($this:ident: $SELF:tt, $rhs:ident: $RHS:ty)
+     to $OUT:tt
+     = $formula:expr) => {
+        impl Div<$RHS> for $SELF {
+            type Output = $OUT;
+            fn div($this, $rhs: $RHS) -> $OUT { $OUT($formula) }
+        }
+    };
     (for $this:ident: $OUT:tt, $rhs:ident: $RHS:ty = $formula:expr) => {
         impl Div<$RHS> for $OUT {
             type Output = $OUT;
             fn div($this, $rhs: $RHS) -> Self { $OUT($formula) }
         }
-    }
+    };
 }
 
 pub mod time;
 pub mod length;
+pub mod speed;

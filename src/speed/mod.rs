@@ -18,8 +18,8 @@ defmul! { for self: KmPerHour, rhs: f64 = self.0 * rhs   }
 defdiv! { for self: KmPerHour, rhs: f64 = self.0 / rhs   }
 
 
-defdiv! { for (self:     M, rhs:  Sec) to MPerSec   = self.0 as f64 / rhs.0 }
-defdiv! { for (self: KiloM, rhs: Hour) to KmPerHour = self.0 as f64 / rhs.0 }
+defdiv! { for (self:     M, rhs:  Sec) to MPerSec   = self.0 / rhs.0 }
+defdiv! { for (self: KiloM, rhs: Hour) to KmPerHour = self.0 / rhs.0 }
 
 
 conversion! { for (s: MPerSec)   to KmPerHour = s.0 * 3.6 }
